@@ -338,49 +338,34 @@
             }, 3000); // Message disappears after 3 seconds
         }
 
-        // Function to generate a reflection prompt using the Gemini API directly from the frontend
-        async function generatePrompt(theme = '') {
+        // Array of journal prompts
+        const journalPrompts = [
+            "Delayed Freedom: Juneteenth reminds us that freedom was not immediately realized for all. How does the concept of 'delayed justice' resonate with feelings of frustration, patience, or the ongoing struggle for equity in mental health and beyond?",
+            "Generational Resilience & Trauma: Consider the immense resilience demonstrated by enslaved people and their descendants. What aspects of this resilience do you see reflected in yourself or your community today? How might the legacy of historical trauma (from slavery, Jim Crow, and ongoing racism) show up in the mental health experiences of Black individuals or communities?",
+            "The Intersections of Identity: Juneteenth highlights the complexity of freedom, especially for those with multiple marginalized identities. How do your various identities intersect and influence your mental well-being and your journey towards liberation?",
+            "Acknowledging Pain & Joy: Juneteenth is a day that holds both grief for past injustices and joy for freedom. How do you make space for both these emotions within yourself or your community? What does it mean to you to allow celebration and grief to coexist?",
+            "Reclaiming Wellness: Juneteenth is a time to reclaim what has been denied. What aspects of mental wellness (e.g., rest, voice, safety, joy, self-expression) do you feel called to reclaim for yourself or your community?",
+            "Cultural Affirmation: Celebrating Juneteenth affirms Black culture and identity. How does connecting with your cultural heritage (through traditions, art, music, storytelling, community) contribute to your mental well-being and sense of pride?",
+            "Self-Care as Resistance: Recognizing that mental wellness is a form of resistance, what specific acts of self-care will you commit to as a way to honor the legacy of those who fought for freedom?",
+            "Educate & Advocate: How can you use Juneteenth as an opportunity to educate yourself and others about the ongoing impacts of racial injustice on mental health? What small or large action can you take to support mental health equity for marginalized communities?",
+            "Creating Space for Dialogue: How can you contribute to creating spaces (in your family, workplace, or community) for authentic conversations about race, history, identity, and healing, particularly as they relate to mental health?",
+            "Visioning Liberation: If mental health is liberation, what does a truly liberated mental health landscape look like for Black communities? What role do you see yourself playing in working towards that vision?"
+        ];
+
+        // Function to generate a random reflection prompt from the predefined list
+        function generatePrompt() {
             const reflectionPromptDiv = document.getElementById('reflectionPrompt');
             const loadingIndicator = document.getElementById('loadingIndicator');
+
             reflectionPromptDiv.textContent = ''; // Clear previous prompt
             loadingIndicator.style.display = 'block'; // Show loading indicator
 
-            let promptText = "Generate a concise, thought-provoking reflection question about Juneteenth, freedom, healing, resilience, and personal mental well-being. The question should encourage self-reflection.";
-
-            if (theme) {
-                promptText = `Generate a short reflection question connecting Juneteenth to the theme of ${theme} and personal mental well-being. The question should encourage self-reflection.`;
-            }
-
-            let chatHistory = [];
-            chatHistory.push({ role: "user", parts: [{ text: promptText }] });
-
-            const payload = { contents: chatHistory };
-            const apiKey = ""; // Leave this as-is; Canvas will provide the key at runtime
-            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
-
-            try {
-                const response = await fetch(apiUrl, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
-                });
-                const result = await response.json();
-
-                if (result.candidates && result.candidates.length > 0 &&
-                    result.candidates[0].content && result.candidates[0].content.parts &&
-                    result.candidates[0].content.parts.length > 0) {
-                    const text = result.candidates[0].content.parts[0].text;
-                    reflectionPromptDiv.textContent = text;
-                } else {
-                    reflectionPromptDiv.textContent = "Could not generate prompt. Please try again.";
-                    console.error("Unexpected API response structure:", result);
-                }
-            } catch (error) {
-                reflectionPromptDiv.textContent = "Failed to fetch prompt. Network error or API issue.";
-                console.error("Error generating prompt:", error);
-            } finally {
+            // Simulate a brief loading time for better user experience
+            setTimeout(() => {
+                const randomIndex = Math.floor(Math.random() * journalPrompts.length);
+                reflectionPromptDiv.textContent = journalPrompts[randomIndex];
                 loadingIndicator.style.display = 'none'; // Hide loading indicator
-            }
+            }, 500); // 500ms delay
         }
     </script>
 </body>
