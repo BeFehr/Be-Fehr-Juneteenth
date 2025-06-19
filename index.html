@@ -60,6 +60,8 @@
             justify-content: center;
             align-items: center;
             text-align: center;
+            /* Adjusted height for better mobile fit */
+            height: 256px; /* h-64 in Tailwind. Default for mobile. */
         }
         #reflectionPrompt {
             min-height: 80px;
@@ -130,23 +132,23 @@
         </section>
 
         <!-- Reflection section with interactive buttons -->
-        <section class="image-overlay relative w-full h-56 sm:h-80 lg:h-96 rounded-lg overflow-hidden flex flex-col items-center justify-center p-4 mb-12">
+        <section class="image-overlay relative w-full h-64 sm:h-80 lg:h-96 rounded-lg overflow-hidden flex flex-col items-center justify-center p-4 mb-12">
             <div class="text-center text-white mb-6">
-                <p class="text-2xl sm:text-3xl font-bold mb-2">Reflect on Freedom, Resilience, and Healing</p>
-                <p class="text-lg sm:text-xl">What does liberation mean for your mental well-being today?</p>
+                <p class="text-xl sm:text-3xl font-bold mb-2">Reflect on Freedom, Resilience, and Healing</p>
+                <p class="text-base sm:text-xl">What does liberation mean for your mental well-being today?</p>
             </div>
-            <div class="flex flex-wrap justify-center gap-4">
-                <div class="p-3 bg-white bg-opacity-20 rounded-full interactive-element" onclick="window.open('https://nmaahc.si.edu/explore/moments/juneteenth', '_blank')">
-                    <span class="text-white text-sm sm:text-base font-bold">Freedom</span>
+            <div class="flex flex-wrap justify-center gap-2 sm:gap-4">
+                <div class="p-2 bg-white bg-opacity-20 rounded-full interactive-element" onclick="window.open('https://nmaahc.si.edu/explore/moments/juneteenth', '_blank')">
+                    <span class="text-white text-xs sm:text-sm font-bold">Freedom</span>
                 </div>
-                <div class="p-3 bg-white bg-opacity-20 rounded-full interactive-element" onclick="window.open('https://nmaahc.si.edu/explore/moments/juneteenth', '_blank')">
-                    <span class="text-white text-sm sm:text-base font-bold">Resilience</span>
+                <div class="p-2 bg-white bg-opacity-20 rounded-full interactive-element" onclick="window.open('https://nmaahc.si.edu/explore/moments/juneteenth', '_blank')">
+                    <span class="text-white text-xs sm:text-sm font-bold">Resilience</span>
                 </div>
-                <div class="p-3 bg-white bg-opacity-20 rounded-full interactive-element" onclick="window.open('https://nmaahc.si.edu/explore/moments/juneteenth', '_blank')">
-                    <span class="text-white text-sm sm:text-base font-bold">Community</span>
+                <div class="p-2 bg-white bg-opacity-20 rounded-full interactive-element" onclick="window.open('https://nmaahc.si.edu/explore/moments/juneteenth', '_blank')">
+                    <span class="text-white text-xs sm:text-sm font-bold">Community</span>
                 </div>
-                <div class="p-3 bg-white bg-opacity-20 rounded-full interactive-element" onclick="window.open('https://nmaahc.si.edu/explore/moments/juneteenth', '_blank')">
-                    <span class="text-white text-sm sm:text-base font-bold">Healing</span>
+                <div class="p-2 bg-white bg-opacity-20 rounded-full interactive-element" onclick="window.open('https://nmaahc.si.edu/explore/moments/juneteenth', '_blank')">
+                    <span class="text-white text-xs sm:text-sm font-bold">Healing</span>
                 </div>
             </div>
         </section>
