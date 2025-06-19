@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Juneteenth - BE FEHR COUNSELING - Mental Health Experience</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #FEE7C8; /* Light orange/cream background inspired by the image */
+            color: #333;
+        }
+        .header-bg {
+            background-color: #2d375a; /* Updated purple hex code */
+        }
+        .juneteenth-text {
+            color: #FFC107; /* Orange-yellow inspired by the image */
+        }
+        .legacy-builders-text {
+            color: #FFFFFF; /* White for contrast */
+        }
+        .event-card {
+            background-color: #2d375a; /* Updated purple hex code */
+            color: #FFFFFF;
+        }
+        .event-card-date {
+            color: #FFC107; /* Orange-yellow for date */
+        }
+        .interactive-section {
+            background-color: #FFFFFF;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .button-primary {
+            background-color: #FFC107;
+            color: #2d375a; /* Button text color updated to the new purple */
+            font-weight: bold;
+        }
+        .button-primary:hover {
+            background-color: #E0A800;
+        }
+        .interactive-element {
+            cursor: pointer;
+            transition: transform 0.2s ease-in-out;
+        }
+        .interactive-element:hover {
+            transform: translateY(-5px);
+        }
+        .image-overlay {
+            background-color: #2d375a; /* Same purple as before */
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+        #reflectionPrompt {
+            min-height: 80px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 10px;
+            background-color: #f9f9f9;
+            color: #333;
+            font-style: italic;
+        }
+        #loadingIndicator {
+            display: none;
+            color: #2d375a;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        .resource-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1rem;
+        }
+        .resource-box {
+            background-color: #F9F9F9;
+            border: 1px solid #E0E0E0;
+            border-radius: 8px;
+            padding: 1rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+        }
+        .resource-box:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .resource-box a {
+            color: #2d375a;
+            font-weight: 600;
+            text-decoration: none;
+        }
+        .resource-box a:hover {
+            text-decoration: underline;
+        }
+        .resource-box p {
+            font-size: 0.95rem;
+            color: #555;
+            margin-top: 0.5rem;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col items-center py-8 px-4 sm:px-6 lg:px-8">
+
+    <!-- Header -->
+    <header class="header-bg w-full py-4 rounded-b-lg shadow-md mb-8 flex flex-col sm:flex-row justify-between items-center px-4">
+        <h1 class="text-white text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight mb-2 sm:mb-0">BE FEHR COUNSELING</h1>
+        <a href="https://www.befehr.com/contact-us/" target="_blank" class="text-white text-lg sm:text-xl font-semibold px-4 py-2 rounded-full border-2 border-white hover:bg-white hover:text-[#2d375a] transition-colors duration-300">
+            Contact Us
+        </a>
+    </header>
+
+    <main class="w-full max-w-4xl">
+        <!-- Juneteenth Title Section -->
+        <section class="text-center mb-12">
+            <h2 class="juneteenth-text text-6xl sm:text-7xl lg:text-8xl font-bold tracking-wide leading-none">
+                <span class="text-orange-500">*</span>
+                JUNETEENTH
+                <span class="text-orange-500">*</span>
+            </h2>
+            <p class="legacy-builders-text text-xl sm:text-2xl lg:text-3xl font-bold mt-4">THE LEGACY BUILDERS: A Path to Healing</p>
+        </section>
+
+        <!-- Reflection section with interactive buttons -->
+        <section class="image-overlay relative w-full h-64 sm:h-80 lg:h-96 rounded-lg overflow-hidden flex flex-col items-center justify-center p-4 mb-12">
+            <div class="text-center text-white mb-6">
+                <p class="text-2xl sm:text-3xl font-bold mb-2">Reflect on Freedom, Resilience, and Healing</p>
+                <p class="text-lg sm:text-xl">What does liberation mean for your mental well-being today?</p>
+            </div>
+            <div class="flex flex-wrap justify-center gap-4">
+                <div class="p-3 bg-white bg-opacity-20 rounded-full interactive-element" onclick="generatePrompt('freedom')">
+                    <span class="text-white text-sm sm:text-base font-bold">Freedom</span>
+                </div>
+                <div class="p-3 bg-white bg-opacity-20 rounded-full interactive-element" onclick="generatePrompt('resilience')">
+                    <span class="text-white text-sm sm:text-base font-bold">Resilience</span>
+                </div>
+                <div class="p-3 bg-white bg-opacity-20 rounded-full interactive-element" onclick="generatePrompt('community')">
+                    <span class="text-white text-sm sm:text-base font-bold">Community</span>
+                </div>
+                <div class="p-3 bg-white bg-opacity-20 rounded-full interactive-element" onclick="generatePrompt('healing')">
+                    <span class="text-white text-sm sm:text-base font-bold">Healing</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Event Details Section -->
+        <section class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+            <div class="event-card p-6 rounded-lg shadow-lg interactive-element" onclick="showMessage('These events foster community and collective healing. Consider joining us!')">
+                <p class="event-card-date text-2xl font-bold mb-2">19 JUNE 2025</p>
+                <p class="text-xl mb-4">7 PM - 9 PM</p>
+                <h3 class="text-2xl font-semibold mb-2">HOLLYWOOD</h3>
+                <p class="text-lg">1770 MONROE ST,</p>
+                <p class="text-lg">HOLLYWOOD, FL 33020</p>
+            </div>
+            <div class="event-card p-6 rounded-lg shadow-lg interactive-element" onclick="showMessage('Connecting with others is key to well-being. Learn more about our community gatherings!')">
+                <p class="event-card-date text-2xl font-bold mb-2">26 JUNE 2025</p>
+                <p class="text-xl mb-4">7 PM - 9 PM</p>
+                <h3 class="text-2xl font-semibold mb-2">WILTON MANORS</h3>
+                <p class="text-lg">2401 N DIXIE HWY,</p>
+                <p class="text-lg">WILTON MANORS, FL 33305</p>
+            </div>
+        </section>
+
+        <!-- Interactive Section: Reflection and Counseling -->
+        <section class="interactive-section text-center p-6 sm:p-8 lg:p-10 mb-12">
+            <h3 class="text-3xl font-bold mb-4 text-[#2d375a]">Juneteenth & Your Well-being</h3>
+            <p class="text-lg mb-6">Take a moment to reflect on the themes of Juneteenth and how they resonate with your personal journey of mental and emotional well-being. Click the button to get a reflection prompt.</p>
+
+            <div class="flex flex-col items-center mb-6">
+                <button class="button-primary py-3 px-6 rounded-full text-lg shadow-md interactive-element mb-4" onclick="generatePrompt()">
+                    Generate Reflection Prompt
+                </button>
+                <div id="loadingIndicator" class="text-sm">Loading prompt...</div>
+                <div id="reflectionPrompt" class="w-full max-w-lg text-left" role="alert" aria-live="polite">
+                    Your reflection prompt will appear here.
+                </div>
+            </div>
+
+            <hr class="my-8 border-gray-300">
+
+            <h3 class="text-3xl font-bold mb-4 text-[#2d375a]">BE FEHR COUNSELING: Support for Your Journey</h3>
+            <p class="text-lg mb-6">At BE FEHR COUNSELING, we believe in the power of healing and resilience, much like the spirit of Juneteenth. We offer compassionate support to help you navigate life's challenges and foster your mental well-being.</p>
+            <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
+                <button class="button-primary py-3 px-6 rounded-full text-lg shadow-md interactive-element" onclick="showMessage('Visit our website or call us to learn more about our counseling services.')">
+                    Connect for Support
+                </button>
+                <button class="button-primary py-3 px-6 rounded-full text-lg shadow-md interactive-element" onclick="showMessage('Explore resources related to mental health and social justice.')">
+                    Explore Resources
+                </button>
+            </div>
+        </section>
+
+        <!-- Resources and Coping Techniques Section -->
+        <section class="interactive-section p-6 sm:p-8 lg:p-10 mb-12">
+            <h3 class="text-3xl font-bold mb-6 text-[#2d375a] text-center">Resources and Coping Techniques</h3>
+            <div class="resource-grid">
+                <div class="resource-box">
+                    <h4 class="font-bold text-lg text-[#2d375a]">Mindfulness & Meditation</h4>
+                    <p>Practice being present to reduce stress and improve focus.</p>
+                </div>
+                <div class="resource-box">
+                    <h4 class="font-bold text-lg text-[#2d375a]">Journaling</h4>
+                    <p>Express your thoughts and feelings to gain clarity and process emotions.</p>
+                </div>
+                <div class="resource-box">
+                    <h4 class="font-bold text-lg text-[#2d375a]">Deep Breathing Exercises</h4>
+                    <p>Simple techniques to calm your nervous system and promote relaxation.</p>
+                </div>
+                <div class="resource-box">
+                    <h4 class="font-bold text-lg text-[#2d375a]">Connecting with Community</h4>
+                    <p>Share experiences, find support, and foster a sense of belonging.</p>
+                </div>
+                <div class="resource-box">
+                    <h4 class="font-bold text-lg text-[#2d375a]">Professional Support</h4>
+                    <p>Don't hesitate to seek help from mental health professionals like BE FEHR COUNSELING.</p>
+                </div>
+                <div class="resource-box">
+                    <h4 class="font-bold text-lg text-[#2d375a]">Nature Therapy</h4>
+                    <p>Spending time outdoors can significantly improve mood and reduce anxiety.</p>
+                </div>
+                <div class="resource-box">
+                    <h4 class="font-bold text-lg text-[#2d375a]">Creative Expression</h4>
+                    <p>Engage in art, music, or writing to process emotions and foster self-discovery.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tips on Building Resilience Section -->
+        <section class="interactive-section p-6 sm:p-8 lg:p-10 mb-12">
+            <h3 class="text-3xl font-bold mb-6 text-[#2d375a] text-center">Tips on Building Resilience</h3>
+            <div class="resource-grid">
+                <div class="resource-box">
+                    <h4 class="font-bold text-lg text-[#2d375a]">Positive Self-Talk</h4>
+                    <p>Challenge negative thoughts and cultivate a positive inner voice to build confidence.</p>
+                </div>
+                <div class="resource-box">
+                    <h4 class="font-bold text-lg text-[#2d375a]">Strong Relationships</h4>
+                    <p>Nurture your connections with family and friends for a robust support system.</p>
+                </div>
+                <div class="resource-box">
+                    <h4 class="font-bold text-lg text-[#2d375a]">Set Realistic Goals</h4>
+                    <p>Achieve small successes consistently to gradually build self-efficacy and confidence.</p>
+                </div>
+                <div class="resource-box">
+                    <h4 class="font-bold text-lg text-[#2d375a]">Practice Self-Care</h4>
+                    <p>Prioritize sleep, balanced nutrition, and regular physical activity for overall well-being.</p>
+                </div>
+                <div class="resource-box">
+                    <h4 class="font-bold text-lg text-[#2d375a]">Embrace Change</h4>
+                    <p>View challenges as opportunities for personal growth and learning, not just obstacles.</p>
+                </div>
+                <div class="resource-box">
+                    <h4 class="font-bold text-lg text-[#2d375a]">Maintain Perspective</h4>
+                    <p>Try to see the bigger picture during difficult times, focusing on what you can control.</p>
+                </div>
+                <div class="resource-box">
+                    <h4 class="font-bold text-lg text-[#2d375a]">Learn from Experience</h4>
+                    <p>Reflect on past challenges and how you overcame them to apply lessons to future adversities.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Mental Health Juneteenth Resources Section -->
+        <section class="interactive-section p-6 sm:p-8 lg:p-10 mb-12">
+            <h3 class="text-3xl font-bold mb-6 text-[#2d375a] text-center">Mental Health Juneteenth Resources</h3>
+            <p class="text-lg mb-4">Explore resources dedicated to supporting the mental health and well-being of the Black community, especially in the context of Juneteenth:</p>
+            <div class="resource-grid">
+                <div class="resource-box">
+                    <a href="https://www.blackmentalhealth.com/" target="_blank" onclick="showMessage('Opening Black Mental Health Alliance (BMHA) website...')">
+                        <h4 class="font-bold text-lg">Black Mental Health Alliance (BMHA)</h4>
+                    </a>
+                    <p>Advocates for mental health and well-being of Black communities.</p>
+                </div>
+                <div class="resource-box">
+                    <a href="https://www.therapyforblackgirls.com/" target="_blank" onclick="showMessage('Opening Therapy for Black Girls website...')">
+                        <h4 class="font-bold text-lg">Therapy for Black Girls</h4>
+                    </a>
+                    <p>Online platforms connecting Black individuals with culturally competent therapists.</p>
+                </div>
+                <div class="resource-box">
+                    <a href="https://thelovelandfoundation.org/" target="_blank" onclick="showMessage('Opening The Loveland Foundation website...')">
+                        <h4 class="font-bold text-lg">The Loveland Foundation</h4>
+                    </a>
+                    <p>Provides financial assistance for Black women and girls seeking therapy.</p>
+                </div>
+                <div class="resource-box">
+                    <a href="https://www.mhanational.org/bipoc-mental-health" target="_blank" onclick="showMessage('Opening Mental Health America (MHA) resources...')">
+                        <h4 class="font-bold text-lg">Mental Health America (MHA) - Black & African American Communities</h4>
+                    </a>
+                    <p>Offers resources and information specific to the Black community.</p>
+                </div>
+                <div class="resource-box">
+                    <a href="https://www.nami.org/Your-Journey/Identity-and-Cultural-Dimensions/Black-African-American" target="_blank" onclick="showMessage('Opening NAMI African American Mental Health resources...')">
+                        <h4 class="font-bold text-lg">NAMI (National Alliance on Mental Illness) - African American Mental Health</h4>
+                    </a>
+                    <p>Provides support, education, and advocacy.</p>
+                </div>
+                <div class="resource-box">
+                    <a href="https://nmaahc.si.edu/events/juneteenth" target="_blank" onclick="showMessage('Opening Juneteenth Educational Sites...')">
+                        <h4 class="font-bold text-lg">Juneteenth Educational Sites</h4>
+                    </a>
+                    <p>Many sites offer historical context which can be vital for communal healing.</p>
+                </div>
+            </div>
+            <p class="text-lg mt-6 text-center text-[#2d375a] font-semibold">Remember to consult with a qualified professional for personalized support.</p>
+        </section>
+
+        <!-- Dynamic Message Box -->
+        <div id="messageBox" class="fixed bottom-8 left-1/2 -translate-x-1/2 bg-gray-800 text-white px-6 py-3 rounded-lg shadow-xl text-center text-lg opacity-0 transition-opacity duration-300" style="z-index: 1000;">
+            This is a message.
+        </div>
+
+    </main>
+
+    <!-- Footer with arrows -->
+    <footer class="w-full flex justify-center py-4">
+        <div class="text-yellow-500 text-4xl">
+            &#x27A4; &#x27A4; &#x27A4; <!-- Right arrows emoji -->
+        </div>
+    </footer>
+
+    <script>
+        // Function to display a temporary message
+        function showMessage(message) {
+            const messageBox = document.getElementById('messageBox');
+            messageBox.textContent = message;
+            messageBox.style.opacity = '1';
+            messageBox.style.transform = 'translate(-50%, -10px)'; // Slightly move up
+            setTimeout(() => {
+                messageBox.style.opacity = '0';
+                messageBox.style.transform = 'translate(-50%, 0)'; // Reset position
+            }, 3000); // Message disappears after 3 seconds
+        }
+
+        // Function to generate a reflection prompt using the Gemini API directly from the frontend
+        async function generatePrompt(theme = '') {
+            const reflectionPromptDiv = document.getElementById('reflectionPrompt');
+            const loadingIndicator = document.getElementById('loadingIndicator');
+            reflectionPromptDiv.textContent = ''; // Clear previous prompt
+            loadingIndicator.style.display = 'block'; // Show loading indicator
+
+            let promptText = "Generate a concise, thought-provoking reflection question about Juneteenth, freedom, healing, resilience, and personal mental well-being. The question should encourage self-reflection.";
+
+            if (theme) {
+                promptText = `Generate a short reflection question connecting Juneteenth to the theme of ${theme} and personal mental well-being. The question should encourage self-reflection.`;
+            }
+
+            let chatHistory = [];
+            chatHistory.push({ role: "user", parts: [{ text: promptText }] });
+
+            const payload = { contents: chatHistory };
+            const apiKey = ""; // Leave this as-is; Canvas will provide the key at runtime
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+
+            try {
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                const result = await response.json();
+
+                if (result.candidates && result.candidates.length > 0 &&
+                    result.candidates[0].content && result.candidates[0].content.parts &&
+                    result.candidates[0].content.parts.length > 0) {
+                    const text = result.candidates[0].content.parts[0].text;
+                    reflectionPromptDiv.textContent = text;
+                } else {
+                    reflectionPromptDiv.textContent = "Could not generate prompt. Please try again.";
+                    console.error("Unexpected API response structure:", result);
+                }
+            } catch (error) {
+                reflectionPromptDiv.textContent = "Failed to fetch prompt. Network error or API issue.";
+                console.error("Error generating prompt:", error);
+            } finally {
+                loadingIndicator.style.display = 'none'; // Hide loading indicator
+            }
+        }
+    </script>
+</body>
+</html>
