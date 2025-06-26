@@ -60,7 +60,6 @@
             justify-content: center;
             align-items: center;
             text-align: center;
-            /* Adjusted height for better mobile fit */
             height: 256px; /* h-64 in Tailwind. Default for mobile. */
         }
         #reflectionPrompt {
@@ -108,6 +107,131 @@
             color: #555;
             margin-top: 0.5rem;
         }
+
+        /* Styles for Breathing Exercise */
+        .breathing-circle-container {
+            width: 150px;
+            height: 150px;
+            margin: 20px auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #2d375a;
+            border-radius: 50%;
+            transition: all 3s ease-in-out;
+            color: white;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+        .breathe-in {
+            transform: scale(1.2);
+            box-shadow: 0 0 20px rgba(255, 193, 7, 0.8);
+        }
+        .breathe-out {
+            transform: scale(0.8);
+            box-shadow: 0 0 10px rgba(255, 193, 7, 0.4);
+        }
+        .meditation-timer {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #2d375a;
+            margin-top: 1rem;
+        }
+        .game-area {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 1rem;
+        }
+        .word-grid-container {
+            display: grid;
+            gap: 5px;
+            padding: 10px;
+            background-color: #f0f0f0;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+        .word-cell {
+            width: 30px; /* Adjusted for smaller screens */
+            height: 30px; /* Adjusted for smaller screens */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            font-size: 0.8rem; /* Smaller font for cells */
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        .word-cell.selected {
+            background-color: #FFC107;
+            color: #2d375a;
+            font-weight: bold;
+        }
+        .word-cell.found {
+            background-color: #4CAF50; /* Green for found words */
+            color: white;
+            font-weight: bold;
+        }
+        #wordList {
+            margin-top: 1rem;
+            text-align: left;
+            width: 100%;
+            max-width: 300px;
+            list-style: none;
+            padding: 0;
+        }
+        #wordList li {
+            background-color: #e8e8e8;
+            padding: 8px;
+            margin-bottom: 5px;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        #wordList li.found {
+            text-decoration: line-through;
+            color: #555;
+            background-color: #d4edda;
+        }
+        .progress-bar-container {
+            width: 100%;
+            background-color: #e0e0e0;
+            border-radius: 5px;
+            margin-top: 1rem;
+            overflow: hidden;
+        }
+        .progress-bar {
+            height: 20px;
+            background-color: #FFC107;
+            border-radius: 5px;
+            text-align: center;
+            color: #2d375a;
+            font-weight: bold;
+            line-height: 20px;
+            transition: width 0.5s ease-in-out;
+        }
+        .mood-indicator-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+            gap: 5px;
+            width: 100%;
+            max-width: 300px;
+            margin-top: 1rem;
+        }
+        .mood-indicator-item {
+            padding: 8px;
+            border-radius: 5px;
+            text-align: center;
+            font-size: 0.8rem;
+            background-color: #eee;
+            border: 1px solid #ddd;
+            font-weight: bold;
+        }
+        .mood-good { background-color: #d4edda; color: #155724; }
+        .mood-ok { background-color: #fff3cd; color: #856404; }
+        .mood-bad { background-color: #f8d7da; color: #721c24; }
     </style>
 </head>
 <body class="min-h-screen flex flex-col items-center py-8 px-4 sm:px-6 lg:px-8">
@@ -196,6 +320,81 @@
                 </button>
             </div>
         </section>
+
+        <!-- New Section: Interactive Mental Wellness Games -->
+        <section class="interactive-section p-6 sm:p-8 lg:p-10 mb-12">
+            <h3 class="text-3xl font-bold mb-6 text-[#2d375a] text-center">Interactive Mental Wellness Games</h3>
+            <p class="text-lg mb-4 text-center">Engage your mind with games designed to promote focus and positive thinking, inspired by themes of freedom and resilience.</p>
+
+            <div class="game-area">
+                <h4 class="font-bold text-xl text-[#2d375a] mb-4">Juneteenth Word Search Challenge</h4>
+                <p class="mb-4 text-center text-sm sm:text-base">Find words related to Juneteenth, freedom, and mental well-being. Click cells to select letters. Find a word horizontally, vertically, or diagonally!</p>
+                <div id="wordGrid" class="word-grid-container">
+                    <!-- Word search grid will be dynamically generated here -->
+                </div>
+                <ul id="wordList" class="text-sm sm:text-base">
+                    <!-- Words to find will be listed here -->
+                </ul>
+                <button class="button-primary py-2 px-4 rounded-full text-sm mt-4" onclick="initializeWordSearch()">Start New Game</button>
+                <p id="wordSearchMessage" class="text-green-700 font-bold mt-2"></p>
+            </div>
+        </section>
+
+        <!-- New Section: Guided Practices for Healing -->
+        <section class="interactive-section p-6 sm:p-8 lg:p-10 mb-12">
+            <h3 class="text-3xl font-bold mb-6 text-[#2d375a] text-center">Guided Practices for Healing</h3>
+            <p class="text-lg mb-4 text-center">Take a moment to calm your mind and nourish your spirit with these guided exercises.</p>
+
+            <div class="flex flex-col items-center mb-8">
+                <h4 class="font-bold text-xl text-[#2d375a] mb-4">Mindful Breathing Exercise</h4>
+                <div id="breathingCircle" class="breathing-circle-container">Breathe In</div>
+                <p id="breathingInstructions" class="text-center text-lg mt-2">Click to start a 4-7-8 breathing cycle.</p>
+                <button class="button-primary py-2 px-4 rounded-full text-sm mt-4" onclick="startBreathingExercise()">Start Breathing</button>
+            </div>
+
+            <hr class="my-8 border-gray-300">
+
+            <div class="flex flex-col items-center">
+                <h4 class="font-bold text-xl text-[#2d375a] mb-4">Calming Meditation</h4>
+                <p class="text-center text-md sm:text-lg mb-4">
+                    "Find a comfortable position. Close your eyes gently or soften your gaze. Bring your awareness to your breath, feeling each inhale and exhale. With each breath, release any tension, and embrace the peace within. Imagine a light of healing filling your body, connecting you to the strength and resilience of those who came before. You are safe, you are strong, you are free."
+                </p>
+                <div id="meditationTimer" class="meditation-timer">00:00</div>
+                <div class="flex space-x-4 mt-4">
+                    <button class="button-primary py-2 px-4 rounded-full text-sm" onclick="startMeditationTimer()">Start Meditation</button>
+                    <button class="button-primary py-2 px-4 rounded-full text-sm" onclick="resetMeditationTimer()">Reset</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- New Section: Your Mental Wellness Journey (Progress Tracking) -->
+        <section class="interactive-section p-6 sm:p-8 lg:p-10 mb-12">
+            <h3 class="text-3xl font-bold mb-6 text-[#2d375a] text-center">Your Mental Wellness Journey</h3>
+            <p class="text-lg mb-4 text-center">Track your mood and celebrate your progress in building resilience.</p>
+
+            <div class="flex flex-col items-center">
+                <h4 class="font-bold text-xl text-[#2d375a] mb-4">Daily Mood Tracker</h4>
+                <p class="mb-2 text-center text-sm sm:text-base">How are you feeling today?</p>
+                <select id="moodSelect" class="p-2 border rounded-md mb-4 text-center w-full max-w-xs">
+                    <option value="">-- Select Mood --</option>
+                    <option value="Good">😁 Good</option>
+                    <option value="Okay">😐 Okay</option>
+                    <option value="Bad">😞 Bad</option>
+                </select>
+                <button class="button-primary py-2 px-4 rounded-full text-sm" onclick="logMood()">Log Mood</button>
+                <p id="moodMessage" class="text-green-700 font-bold mt-2"></p>
+
+                <h4 class="font-bold text-xl text-[#2d375a] mb-4 mt-6">Your Recent Moods</h4>
+                <div id="moodHistory" class="mood-indicator-grid">
+                    <!-- Mood history will be displayed here -->
+                </div>
+                <div class="progress-bar-container">
+                    <div id="resilienceProgressBar" class="progress-bar" style="width: 0%;">0% Resilience Growth</div>
+                </div>
+                <p class="text-center text-sm mt-2">Consistent positive mood logs contribute to your resilience growth!</p>
+            </div>
+        </section>
+
 
         <!-- Resources and Coping Techniques Section -->
         <section class="interactive-section p-6 sm:p-8 lg:p-10 mb-12">
@@ -332,19 +531,19 @@
     </footer>
 
     <script>
-        // Function to display a temporary message
+        // --- General Utility Functions ---
         function showMessage(message) {
             const messageBox = document.getElementById('messageBox');
             messageBox.textContent = message;
             messageBox.style.opacity = '1';
-            messageBox.style.transform = 'translate(-50%, -10px)'; // Slightly move up
+            messageBox.style.transform = 'translate(-50%, -10px)';
             setTimeout(() => {
                 messageBox.style.opacity = '0';
-                messageBox.style.transform = 'translate(-50%, 0)'; // Reset position
-            }, 3000); // Message disappears after 3 seconds
+                messageBox.style.transform = 'translate(-50%, 0)';
+            }, 3000);
         }
 
-        // Array of journal prompts
+        // --- Reflection Prompt Generation (Journal Prompts) ---
         const journalPrompts = [
             "Delayed Freedom: Juneteenth reminds us that freedom was not immediately realized for all. How does the concept of 'delayed justice' resonate with feelings of frustration, patience, or the ongoing struggle for equity in mental health and beyond?",
             "Generational Resilience & Trauma: Consider the immense resilience demonstrated by enslaved people and their descendants. What aspects of this resilience do you see reflected in yourself or your community today? How might the legacy of historical trauma (from slavery, Jim Crow, and ongoing racism) show up in the mental health experiences of Black individuals or communities?",
@@ -358,21 +557,343 @@
             "Visioning Liberation: If mental health is liberation, what does a truly liberated mental health landscape look like for Black communities? What role do you see yourself playing in working towards that vision?"
         ];
 
-        // Function to generate a random reflection prompt from the predefined list
         function generatePrompt() {
             const reflectionPromptDiv = document.getElementById('reflectionPrompt');
             const loadingIndicator = document.getElementById('loadingIndicator');
 
-            reflectionPromptDiv.textContent = ''; // Clear previous prompt
-            loadingIndicator.style.display = 'block'; // Show loading indicator
+            reflectionPromptDiv.textContent = '';
+            loadingIndicator.style.display = 'block';
 
-            // Simulate a brief loading time for better user experience
             setTimeout(() => {
                 const randomIndex = Math.floor(Math.random() * journalPrompts.length);
                 reflectionPromptDiv.textContent = journalPrompts[randomIndex];
-                loadingIndicator.style.display = 'none'; // Hide loading indicator
-            }, 500); // 500ms delay
+                loadingIndicator.style.display = 'none';
+            }, 500);
         }
+
+        // --- Breathing Exercise ---
+        let breathingInterval;
+        let breathingPhase = 'in';
+        let breathCount = 0;
+        const breathingCircle = document.getElementById('breathingCircle');
+        const breathingInstructions = document.getElementById('breathingInstructions');
+
+        function startBreathingExercise() {
+            if (breathingInterval) return; // Prevent multiple intervals
+
+            breathingInstructions.textContent = 'Breathe In (4s)';
+            breathingCircle.classList.remove('breathe-out');
+            breathingCircle.classList.add('breathe-in');
+            breathingPhase = 'in';
+            breathCount = 0;
+
+            breathingInterval = setInterval(() => {
+                breathCount++;
+                if (breathingPhase === 'in') {
+                    if (breathCount === 4) {
+                        breathingInstructions.textContent = 'Hold (7s)';
+                        breathingCircle.classList.remove('breathe-in'); // Keep scale if needed for hold
+                    } else if (breathCount === 11) { // 4s in + 7s hold
+                        breathingInstructions.textContent = 'Breathe Out (8s)';
+                        breathingCircle.classList.add('breathe-out');
+                        breathingPhase = 'out';
+                    }
+                } else if (breathingPhase === 'out') {
+                    if (breathCount === 19) { // 4s in + 7s hold + 8s out
+                        breathingInstructions.textContent = 'Breathe In (4s)';
+                        breathingCircle.classList.remove('breathe-out');
+                        breathingCircle.classList.add('breathe-in');
+                        breathingPhase = 'in';
+                        breathCount = 0; // Reset count for next cycle
+                    }
+                }
+            }, 1000); // Check every second
+            showMessage('Starting 4-7-8 breathing exercise. Follow the instructions!');
+        }
+
+        // --- Calming Meditation Timer ---
+        let meditationTimerInterval;
+        let meditationSeconds = 0;
+        const meditationTimerDisplay = document.getElementById('meditationTimer');
+
+        function formatTime(totalSeconds) {
+            const minutes = Math.floor(totalSeconds / 60);
+            const seconds = totalSeconds % 60;
+            return `${minutes < 10 ? '0' : ''}${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+        }
+
+        function startMeditationTimer() {
+            if (meditationTimerInterval) return; // Prevent multiple intervals
+            meditationTimerInterval = setInterval(() => {
+                meditationSeconds++;
+                meditationTimerDisplay.textContent = formatTime(meditationSeconds);
+            }, 1000);
+            showMessage('Meditation started. Find your calm.');
+        }
+
+        function resetMeditationTimer() {
+            clearInterval(meditationTimerInterval);
+            meditationTimerInterval = null;
+            meditationSeconds = 0;
+            meditationTimerDisplay.textContent = '00:00';
+            showMessage('Meditation timer reset.');
+        }
+
+        // --- Mental Wellness Journey (Progress Tracking) ---
+        const moodHistory = []; // Store mood data
+        const maxMoodEntries = 7; // Display last 7 days for simplicity
+
+        function logMood() {
+            const moodSelect = document.getElementById('moodSelect');
+            const selectedMood = moodSelect.value;
+            const moodMessage = document.getElementById('moodMessage');
+
+            if (!selectedMood) {
+                moodMessage.textContent = 'Please select a mood!';
+                moodMessage.style.color = 'red';
+                return;
+            }
+
+            const today = new Date().toLocaleDateString('en-US');
+            // Check if mood for today already exists to prevent duplicate entries
+            const existingEntryIndex = moodHistory.findIndex(entry => entry.date === today);
+
+            if (existingEntryIndex !== -1) {
+                moodHistory[existingEntryIndex].mood = selectedMood; // Update existing
+                showMessage(`Mood for today updated to: ${selectedMood}`);
+            } else {
+                moodHistory.push({ date: today, mood: selectedMood }); // Add new
+                showMessage(`Mood logged: ${selectedMood}`);
+            }
+
+            // Keep only the last 'maxMoodEntries' entries
+            if (moodHistory.length > maxMoodEntries) {
+                moodHistory.shift(); // Remove the oldest entry
+            }
+
+            renderMoodHistory();
+            updateResilienceProgress();
+            moodMessage.style.color = 'green';
+            moodSelect.value = ''; // Reset select box
+        }
+
+        function renderMoodHistory() {
+            const moodHistoryDiv = document.getElementById('moodHistory');
+            moodHistoryDiv.innerHTML = ''; // Clear previous display
+
+            moodHistory.forEach(entry => {
+                const item = document.createElement('div');
+                item.classList.add('mood-indicator-item');
+                let moodClass = '';
+                if (entry.mood === 'Good') {
+                    moodClass = 'mood-good';
+                } else if (entry.mood === 'Okay') {
+                    moodClass = 'mood-ok';
+                } else {
+                    moodClass = 'mood-bad';
+                }
+                item.classList.add(moodClass);
+                item.textContent = entry.mood;
+                item.title = entry.date; // Show date on hover
+                moodHistoryDiv.appendChild(item);
+            });
+        }
+
+        function updateResilienceProgress() {
+            const resilienceProgressBar = document.getElementById('resilienceProgressBar');
+            // Simple calculation: each 'Good' mood contributes to 15% progress, up to 100%
+            const goodMoods = moodHistory.filter(entry => entry.mood === 'Good').length;
+            let progress = Math.min(goodMoods * (100 / maxMoodEntries), 100); // Scale to 100% based on max entries
+
+            resilienceProgressBar.style.width = `${progress}%`;
+            resilienceProgressBar.textContent = `${Math.round(progress)}% Resilience Growth`;
+        }
+
+        // --- Simple Word Search Game ---
+        const wordSearchWords = [
+            { word: "FREEDOM", found: false },
+            { word: "HEALING", found: false },
+            { word: "JUNETEENTH", found: false },
+            { word: "RESILIENCE", found: false },
+            { word: "COMMUNITY", found: false },
+            { word: "LIBERATION", found: false }
+        ];
+        const gridSize = 10;
+        let grid = [];
+        let selectedCells = [];
+        let wordSearchMessage = document.getElementById('wordSearchMessage');
+
+        function initializeWordSearch() {
+            grid = Array(gridSize).fill(null).map(() => Array(gridSize).fill(''));
+            selectedCells = [];
+            wordSearchMessage.textContent = '';
+            wordSearchWords.forEach(w => w.found = false); // Reset found status
+
+            // Fill with random letters
+            for (let r = 0; r < gridSize; r++) {
+                for (let c = 0; c < gridSize; c++) {
+                    grid[r][c] = String.fromCharCode(65 + Math.floor(Math.random() * 26)); // Random A-Z
+                }
+            }
+
+            placeWordsInGrid();
+            renderWordGrid();
+            renderWordList();
+            showMessage('New Word Search game started! Find the words listed.');
+        }
+
+        function placeWordsInGrid() {
+            wordSearchWords.forEach(wordObj => {
+                const word = wordObj.word;
+                let placed = false;
+                let attempts = 0;
+                const maxAttempts = 100;
+
+                while (!placed && attempts < maxAttempts) {
+                    attempts++;
+                    const direction = Math.floor(Math.random() * 4); // 0: H, 1: V, 2: D1, 3: D2
+                    const r = Math.floor(Math.random() * gridSize);
+                    const c = Math.floor(Math.random() * gridSize);
+
+                    let canPlace = true;
+                    if (direction === 0) { // Horizontal
+                        if (c + word.length > gridSize) { canPlace = false; }
+                    } else if (direction === 1) { // Vertical
+                        if (r + word.length > gridSize) { canPlace = false; }
+                    } else if (direction === 2) { // Diagonal (top-left to bottom-right)
+                        if (r + word.length > gridSize || c + word.length > gridSize) { canPlace = false; }
+                    } else if (direction === 3) { // Diagonal (top-right to bottom-left)
+                        if (r + word.length > gridSize || c - word.length < -1) { canPlace = false; }
+                    }
+
+                    if (canPlace) {
+                        let tempGrid = JSON.parse(JSON.stringify(grid)); // Deep copy to test placement
+                        for (let i = 0; i < word.length; i++) {
+                            let newR = r, newC = c;
+                            if (direction === 0) newC = c + i;
+                            else if (direction === 1) newR = r + i;
+                            else if (direction === 2) { newR = r + i; newC = c + i; }
+                            else if (direction === 3) { newR = r + i; newC = c - i; }
+
+                            if (tempGrid[newR][newC] !== '' && tempGrid[newR][newC] !== word[i]) {
+                                canPlace = false; // Collision with another letter
+                                break;
+                            }
+                            tempGrid[newR][newC] = word[i];
+                        }
+
+                        if (canPlace) {
+                            grid = tempGrid; // Commit changes
+                            placed = true;
+                        }
+                    }
+                }
+                if (!placed) {
+                    console.warn(`Could not place word: ${word}`);
+                    // Fallback: If a word can't be placed, it just won't appear.
+                }
+            });
+        }
+
+
+        function renderWordGrid() {
+            const wordGridContainer = document.getElementById('wordGrid');
+            wordGridContainer.innerHTML = ''; // Clear previous grid
+            wordGridContainer.style.gridTemplateColumns = `repeat(${gridSize}, 1fr)`;
+
+            for (let r = 0; r < gridSize; r++) {
+                for (let c = 0; c < gridSize; c++) {
+                    const cell = document.createElement('div');
+                    cell.classList.add('word-cell');
+                    cell.textContent = grid[r][c];
+                    cell.dataset.row = r;
+                    cell.dataset.col = c;
+                    cell.onclick = handleCellClick;
+                    wordGridContainer.appendChild(cell);
+                }
+            }
+        }
+
+        function renderWordList() {
+            const wordListElement = document.getElementById('wordList');
+            wordListElement.innerHTML = '';
+            wordSearchWords.forEach(wordObj => {
+                const li = document.createElement('li');
+                li.textContent = wordObj.word;
+                if (wordObj.found) {
+                    li.classList.add('found');
+                }
+                wordListElement.appendChild(li);
+            });
+        }
+
+        function handleCellClick(event) {
+            const cell = event.target;
+            const row = parseInt(cell.dataset.row);
+            const col = parseInt(cell.dataset.col);
+
+            // Toggle selection
+            const index = selectedCells.findIndex(c => c.row === row && c.col === col);
+            if (index > -1) {
+                selectedCells.splice(index, 1);
+                cell.classList.remove('selected');
+            } else {
+                selectedCells.push({ row, col, letter: cell.textContent, element: cell });
+                cell.classList.add('selected');
+            }
+
+            if (selectedCells.length >= 2) {
+                checkSelectedWord();
+            }
+        }
+
+        function checkSelectedWord() {
+            // Sort selected cells to ensure consistent order (e.g., top-left to bottom-right)
+            selectedCells.sort((a, b) => {
+                if (a.row !== b.row) return a.row - b.row;
+                return a.col - b.col;
+            });
+
+            const selectedLetters = selectedCells.map(c => c.letter).join('');
+            let found = false;
+
+            for (let i = 0; i < wordSearchWords.length; i++) {
+                if (wordSearchWords[i].word === selectedLetters && !wordSearchWords[i].found) {
+                    found = true;
+                    wordSearchWords[i].found = true;
+                    selectedCells.forEach(cell => cell.element.classList.add('found'));
+                    wordSearchMessage.textContent = `Found: ${selectedLetters}!`;
+                    wordSearchMessage.style.color = 'green';
+                    break;
+                }
+            }
+
+            if (found) {
+                renderWordList();
+                selectedCells = []; // Clear selection for next word
+                setTimeout(() => {
+                    selectedCells.forEach(cell => cell.element.classList.remove('selected'));
+                }, 500); // Give a moment for 'found' highlight
+                if (wordSearchWords.every(w => w.found)) {
+                    showMessage('Congratulations! You found all the words!');
+                }
+            } else {
+                // If not found, clear selection after a short delay
+                wordSearchMessage.textContent = 'Keep trying!';
+                wordSearchMessage.style.color = 'red';
+                setTimeout(() => {
+                    selectedCells.forEach(cell => cell.element.classList.remove('selected'));
+                    selectedCells = [];
+                }, 700);
+            }
+        }
+
+        // Initialize elements on page load
+        window.onload = function() {
+            renderMoodHistory(); // Load any previously logged moods (if using local storage, or default empty)
+            updateResilienceProgress(); // Initial update
+            initializeWordSearch(); // Start a new game when the page loads
+        };
     </script>
 </body>
 </html>
