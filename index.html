@@ -123,6 +123,10 @@
             font-weight: bold;
             font-size: 1.2rem;
         }
+        .breathing-circle-container.disabled-breathing {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
         .breathe-in {
             transform: scale(1.2);
             box-shadow: 0 0 20px rgba(255, 193, 7, 0.8);
@@ -142,58 +146,6 @@
             flex-direction: column;
             align-items: center;
             margin-top: 1rem;
-        }
-        .word-grid-container {
-            display: grid;
-            gap: 5px;
-            padding: 10px;
-            background-color: #f0f0f0;
-            border-radius: 8px;
-            margin-bottom: 15px;
-        }
-        .word-cell {
-            width: 30px; /* Adjusted for smaller screens */
-            height: 30px; /* Adjusted for smaller screens */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background-color: #fff;
-            border: 1px solid #ddd;
-            font-size: 0.8rem; /* Smaller font for cells */
-            cursor: pointer;
-            border-radius: 4px;
-        }
-        .word-cell.selected {
-            background-color: #FFC107;
-            color: #2d375a;
-            font-weight: bold;
-        }
-        .word-cell.found {
-            background-color: #4CAF50; /* Green for found words */
-            color: white;
-            font-weight: bold;
-        }
-        #wordList {
-            margin-top: 1rem;
-            text-align: left;
-            width: 100%;
-            max-width: 300px;
-            list-style: none;
-            padding: 0;
-        }
-        #wordList li {
-            background-color: #e8e8e8;
-            padding: 8px;
-            margin-bottom: 5px;
-            border-radius: 5px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        #wordList li.found {
-            text-decoration: line-through;
-            color: #555;
-            background-color: #d4edda;
         }
         .progress-bar-container {
             width: 100%;
@@ -232,6 +184,60 @@
         .mood-good { background-color: #d4edda; color: #155724; }
         .mood-ok { background-color: #fff3cd; color: #856404; }
         .mood-bad { background-color: #f8d7da; color: #721c24; }
+
+        /* Styles for Trivia Game */
+        #triviaQuestion {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #2d375a;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+        #triviaChoices {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            width: 100%;
+            max-width: 300px;
+            margin-bottom: 1rem;
+        }
+        .trivia-choice-button {
+            background-color: #f0f0f0;
+            color: #333;
+            padding: 10px 15px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: background-color 0.2s, transform 0.1s;
+        }
+        .trivia-choice-button:hover {
+            background-color: #e0e0e0;
+            transform: translateY(-2px);
+        }
+        .trivia-choice-button.correct {
+            background-color: #d4edda;
+            color: #155724;
+            border: 2px solid #155724;
+        }
+        .trivia-choice-button.incorrect {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 2px solid #721c24;
+        }
+        .trivia-choice-button:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+        #triviaMessage {
+            font-weight: bold;
+            margin-top: 0.5rem;
+        }
+        #triviaScore {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: #2d375a;
+            margin-top: 1rem;
+        }
     </style>
 </head>
 <body class="min-h-screen flex flex-col items-center py-8 px-4 sm:px-6 lg:px-8">
@@ -321,52 +327,6 @@
             </div>
         </section>
 
-        <!-- New Section: Interactive Mental Wellness Games -->
-        <section class="interactive-section p-6 sm:p-8 lg:p-10 mb-12">
-            <h3 class="text-3xl font-bold mb-6 text-[#2d375a] text-center">Interactive Mental Wellness Games</h3>
-            <p class="text-lg mb-4 text-center">Engage your mind with games designed to promote focus and positive thinking, inspired by themes of freedom and resilience.</p>
-
-            <div class="game-area">
-                <h4 class="font-bold text-xl text-[#2d375a] mb-4">Juneteenth Word Search Challenge</h4>
-                <p class="mb-4 text-center text-sm sm:text-base">Find words related to Juneteenth, freedom, and mental well-being. Click cells to select letters. Find a word horizontally, vertically, or diagonally!</p>
-                <div id="wordGrid" class="word-grid-container">
-                    <!-- Word search grid will be dynamically generated here -->
-                </div>
-                <ul id="wordList" class="text-sm sm:text-base">
-                    <!-- Words to find will be listed here -->
-                </ul>
-                <button class="button-primary py-2 px-4 rounded-full text-sm mt-4" onclick="initializeWordSearch()">Start New Game</button>
-                <p id="wordSearchMessage" class="text-green-700 font-bold mt-2"></p>
-            </div>
-        </section>
-
-        <!-- New Section: Guided Practices for Healing -->
-        <section class="interactive-section p-6 sm:p-8 lg:p-10 mb-12">
-            <h3 class="text-3xl font-bold mb-6 text-[#2d375a] text-center">Guided Practices for Healing</h3>
-            <p class="text-lg mb-4 text-center">Take a moment to calm your mind and nourish your spirit with these guided exercises.</p>
-
-            <div class="flex flex-col items-center mb-8">
-                <h4 class="font-bold text-xl text-[#2d375a] mb-4">Mindful Breathing Exercise</h4>
-                <div id="breathingCircle" class="breathing-circle-container">Breathe In</div>
-                <p id="breathingInstructions" class="text-center text-lg mt-2">Click to start a 4-7-8 breathing cycle.</p>
-                <button class="button-primary py-2 px-4 rounded-full text-sm mt-4" onclick="startBreathingExercise()">Start Breathing</button>
-            </div>
-
-            <hr class="my-8 border-gray-300">
-
-            <div class="flex flex-col items-center">
-                <h4 class="font-bold text-xl text-[#2d375a] mb-4">Calming Meditation</h4>
-                <p class="text-center text-md sm:text-lg mb-4">
-                    "Find a comfortable position. Close your eyes gently or soften your gaze. Bring your awareness to your breath, feeling each inhale and exhale. With each breath, release any tension, and embrace the peace within. Imagine a light of healing filling your body, connecting you to the strength and resilience of those who came before. You are safe, you are strong, you are free."
-                </p>
-                <div id="meditationTimer" class="meditation-timer">00:00</div>
-                <div class="flex space-x-4 mt-4">
-                    <button class="button-primary py-2 px-4 rounded-full text-sm" onclick="startMeditationTimer()">Start Meditation</button>
-                    <button class="button-primary py-2 px-4 rounded-full text-sm" onclick="resetMeditationTimer()">Reset</button>
-                </div>
-            </div>
-        </section>
-
         <!-- New Section: Your Mental Wellness Journey (Progress Tracking) -->
         <section class="interactive-section p-6 sm:p-8 lg:p-10 mb-12">
             <h3 class="text-3xl font-bold mb-6 text-[#2d375a] text-center">Your Mental Wellness Journey</h3>
@@ -392,6 +352,57 @@
                     <div id="resilienceProgressBar" class="progress-bar" style="width: 0%;">0% Resilience Growth</div>
                 </div>
                 <p class="text-center text-sm mt-2">Consistent positive mood logs contribute to your resilience growth!</p>
+            </div>
+        </section>
+
+        <!-- New Section: Interactive Mental Wellness Games -->
+        <section class="interactive-section p-6 sm:p-8 lg:p-10 mb-12">
+            <h3 class="text-3xl font-bold mb-6 text-[#2d375a] text-center">Interactive Mental Wellness Games</h3>
+            <p class="text-lg mb-4 text-center">Engage your mind with games designed to promote focus and positive thinking, inspired by themes of freedom and resilience.</p>
+
+            <div class="game-area">
+                <h4 class="font-bold text-xl text-[#2d375a] mb-4">Juneteenth Trivia Challenge</h4>
+                <p class="mb-4 text-center text-sm sm:text-base">Test your knowledge on Juneteenth and mental wellness!</p>
+                <div id="triviaQuestion" class="mb-4"></div>
+                <div id="triviaChoices" class="flex flex-col gap-3">
+                    <!-- Trivia choices will be dynamically generated here -->
+                </div>
+                <p id="triviaMessage" class="font-bold mt-2"></p>
+                <p id="triviaScore" class="mt-2">Score: 0 / 0</p>
+                <div class="flex space-x-4 mt-4">
+                    <button id="startTriviaBtn" class="button-primary py-2 px-4 rounded-full text-sm" onclick="initializeTriviaGame()">Start New Trivia</button>
+                    <button id="nextTriviaBtn" class="button-primary py-2 px-4 rounded-full text-sm" onclick="nextTriviaQuestion()">Next Question</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- New Section: Guided Practices for Healing -->
+        <section class="interactive-section p-6 sm:p-8 lg:p-10 mb-12">
+            <h3 class="text-3xl font-bold mb-6 text-[#2d375a] text-center">Guided Practices for Healing</h3>
+            <p class="text-lg mb-4 text-center">Take a moment to calm your mind and nourish your spirit with these guided exercises.</p>
+
+            <div class="flex flex-col items-center mb-8">
+                <h4 class="font-bold text-xl text-[#2d375a] mb-4">Mindful Breathing Exercise</h4>
+                <div id="breathingCircle" class="breathing-circle-container">Breathe In</div>
+                <p id="breathingInstructions" class="text-center text-lg mt-2">Click to start a 4-7-8 breathing cycle.</p>
+                <div class="flex space-x-4 mt-4">
+                    <button id="startBreathingBtn" class="button-primary py-2 px-4 rounded-full text-sm" onclick="startBreathingExercise()">Start Breathing</button>
+                    <button id="stopBreathingBtn" class="button-primary py-2 px-4 rounded-full text-sm" onclick="stopBreathingExercise()" disabled>Stop Breathing</button>
+                </div>
+            </div>
+
+            <hr class="my-8 border-gray-300">
+
+            <div class="flex flex-col items-center">
+                <h4 class="font-bold text-xl text-[#2d375a] mb-4">Calming Meditation</h4>
+                <p class="text-center text-md sm:text-lg mb-4">
+                    "Find a comfortable position. Close your eyes gently or soften your gaze. Bring your awareness to your breath, feeling each inhale and exhale. With each breath, release any tension, and embrace the peace within. Imagine a light of healing filling your body, connecting you to the strength and resilience of those who came before. You are safe, you are strong, you are free."
+                </p>
+                <div id="meditationTimer" class="meditation-timer">00:00</div>
+                <div class="flex space-x-4 mt-4">
+                    <button class="button-primary py-2 px-4 rounded-full text-sm" onclick="startMeditationTimer()">Start Meditation</button>
+                    <button class="button-primary py-2 px-4 rounded-full text-sm" onclick="resetMeditationTimer()">Reset</button>
+                </div>
             </div>
         </section>
 
@@ -571,15 +582,21 @@
             }, 500);
         }
 
-        // --- Breathing Exercise ---
+        // --- Mindful Breathing Exercise ---
         let breathingInterval;
         let breathingPhase = 'in';
         let breathCount = 0;
         const breathingCircle = document.getElementById('breathingCircle');
         const breathingInstructions = document.getElementById('breathingInstructions');
+        const startBreathingBtn = document.getElementById('startBreathingBtn');
+        const stopBreathingBtn = document.getElementById('stopBreathingBtn');
 
         function startBreathingExercise() {
             if (breathingInterval) return; // Prevent multiple intervals
+
+            startBreathingBtn.disabled = true;
+            stopBreathingBtn.disabled = false;
+            breathingCircle.classList.remove('disabled-breathing'); // Enable interaction visual
 
             breathingInstructions.textContent = 'Breathe In (4s)';
             breathingCircle.classList.remove('breathe-out');
@@ -609,6 +626,17 @@
                 }
             }, 1000); // Check every second
             showMessage('Starting 4-7-8 breathing exercise. Follow the instructions!');
+        }
+
+        function stopBreathingExercise() {
+            clearInterval(breathingInterval);
+            breathingInterval = null;
+            breathingCircle.classList.remove('breathe-in', 'breathe-out');
+            breathingCircle.classList.add('disabled-breathing'); // Add visual for stopped state
+            breathingInstructions.textContent = 'Click to start a 4-7-8 breathing cycle.';
+            startBreathingBtn.disabled = false;
+            stopBreathingBtn.disabled = true;
+            showMessage('Breathing exercise stopped.');
         }
 
         // --- Calming Meditation Timer ---
@@ -709,190 +737,125 @@
             resilienceProgressBar.textContent = `${Math.round(progress)}% Resilience Growth`;
         }
 
-        // --- Simple Word Search Game ---
-        const wordSearchWords = [
-            { word: "FREEDOM", found: false },
-            { word: "HEALING", found: false },
-            { word: "JUNETEENTH", found: false },
-            { word: "RESILIENCE", found: false },
-            { word: "COMMUNITY", found: false },
-            { word: "LIBERATION", found: false }
+        // --- Juneteenth Trivia Challenge Game ---
+        const triviaQuestions = [
+            {
+                question: "What year did federal troops arrive in Galveston, Texas, proclaiming freedom for enslaved people?",
+                choices: ["1863", "1865", "1870", "1875"],
+                correct: "1865",
+                explanation: "Juneteenth commemorates June 19, 1865, when Union General Gordon Granger arrived in Galveston, Texas, and announced the end of slavery."
+            },
+            {
+                question: "What is another name for Juneteenth?",
+                choices: ["Emancipation Day", "Freedom Day", "Jubilee Day", "All of the above"],
+                correct: "All of the above",
+                explanation: "Juneteenth is known by many names, including Emancipation Day, Freedom Day, and Jubilee Day."
+            },
+            {
+                question: "Which of these is a key component of resilience?",
+                choices: ["Avoiding challenges", "Blaming others", "Strong relationships", "Suppressing emotions"],
+                correct: "Strong relationships",
+                explanation: "Building strong relationships and social support networks is crucial for fostering resilience."
+            },
+            {
+                question: "What historical document declared enslaved people in Confederate states to be free?",
+                choices: ["Constitution", "Bill of Rights", "Emancipation Proclamation", "Declaration of Independence"],
+                correct: "Emancipation Proclamation",
+                explanation: "President Abraham Lincoln issued the Emancipation Proclamation on January 1, 1863."
+            },
+            {
+                question: "Mental wellness is best described as:",
+                choices: ["Absence of stress", "Constant happiness", "Ability to cope with life's challenges", "Perfect emotional balance"],
+                correct: "Ability to cope with life's challenges",
+                explanation: "Mental wellness involves the ability to manage thoughts, feelings, and behaviors, and cope effectively with life's stresses."
+            }
         ];
-        const gridSize = 10;
-        let grid = [];
-        let selectedCells = [];
-        let wordSearchMessage = document.getElementById('wordSearchMessage');
+        let currentTriviaQuestionIndex = 0;
+        let triviaScore = 0;
+        const triviaQuestionDisplay = document.getElementById('triviaQuestion');
+        const triviaChoicesContainer = document.getElementById('triviaChoices');
+        const triviaMessage = document.getElementById('triviaMessage');
+        const triviaScoreDisplay = document.getElementById('triviaScore');
+        const startTriviaBtn = document.getElementById('startTriviaBtn');
+        const nextTriviaBtn = document.getElementById('nextTriviaBtn');
 
-        function initializeWordSearch() {
-            grid = Array(gridSize).fill(null).map(() => Array(gridSize).fill(''));
-            selectedCells = [];
-            wordSearchMessage.textContent = '';
-            wordSearchWords.forEach(w => w.found = false); // Reset found status
 
-            // Fill with random letters
-            for (let r = 0; r < gridSize; r++) {
-                for (let c = 0; c < gridSize; c++) {
-                    grid[r][c] = String.fromCharCode(65 + Math.floor(Math.random() * 26)); // Random A-Z
-                }
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
             }
-
-            placeWordsInGrid();
-            renderWordGrid();
-            renderWordList();
-            showMessage('New Word Search game started! Find the words listed.');
+            return array;
         }
 
-        function placeWordsInGrid() {
-            wordSearchWords.forEach(wordObj => {
-                const word = wordObj.word;
-                let placed = false;
-                let attempts = 0;
-                const maxAttempts = 100;
-
-                while (!placed && attempts < maxAttempts) {
-                    attempts++;
-                    const direction = Math.floor(Math.random() * 4); // 0: H, 1: V, 2: D1, 3: D2
-                    const r = Math.floor(Math.random() * gridSize);
-                    const c = Math.floor(Math.random() * gridSize);
-
-                    let canPlace = true;
-                    if (direction === 0) { // Horizontal
-                        if (c + word.length > gridSize) { canPlace = false; }
-                    } else if (direction === 1) { // Vertical
-                        if (r + word.length > gridSize) { canPlace = false; }
-                    } else if (direction === 2) { // Diagonal (top-left to bottom-right)
-                        if (r + word.length > gridSize || c + word.length > gridSize) { canPlace = false; }
-                    } else if (direction === 3) { // Diagonal (top-right to bottom-left)
-                        if (r + word.length > gridSize || c - word.length < -1) { canPlace = false; }
-                    }
-
-                    if (canPlace) {
-                        let tempGrid = JSON.parse(JSON.stringify(grid)); // Deep copy to test placement
-                        for (let i = 0; i < word.length; i++) {
-                            let newR = r, newC = c;
-                            if (direction === 0) newC = c + i;
-                            else if (direction === 1) newR = r + i;
-                            else if (direction === 2) { newR = r + i; newC = c + i; }
-                            else if (direction === 3) { newR = r + i; newC = c - i; }
-
-                            if (tempGrid[newR][newC] !== '' && tempGrid[newR][newC] !== word[i]) {
-                                canPlace = false; // Collision with another letter
-                                break;
-                            }
-                            tempGrid[newR][newC] = word[i];
-                        }
-
-                        if (canPlace) {
-                            grid = tempGrid; // Commit changes
-                            placed = true;
-                        }
-                    }
-                }
-                if (!placed) {
-                    console.warn(`Could not place word: ${word}`);
-                    // Fallback: If a word can't be placed, it just won't appear.
-                }
-            });
+        function initializeTriviaGame() {
+            currentTriviaQuestionIndex = 0;
+            triviaScore = 0;
+            shuffleArray(triviaQuestions); // Randomize question order
+            updateTriviaScore();
+            nextTriviaQuestion();
+            showMessage('New Trivia Challenge started!');
         }
 
+        function nextTriviaQuestion() {
+            triviaMessage.textContent = ''; // Clear previous message
+            if (currentTriviaQuestionIndex < triviaQuestions.length) {
+                const q = triviaQuestions[currentTriviaQuestionIndex];
+                triviaQuestionDisplay.textContent = q.question;
+                triviaChoicesContainer.innerHTML = ''; // Clear previous choices
 
-        function renderWordGrid() {
-            const wordGridContainer = document.getElementById('wordGrid');
-            wordGridContainer.innerHTML = ''; // Clear previous grid
-            wordGridContainer.style.gridTemplateColumns = `repeat(${gridSize}, 1fr)`;
-
-            for (let r = 0; r < gridSize; r++) {
-                for (let c = 0; c < gridSize; c++) {
-                    const cell = document.createElement('div');
-                    cell.classList.add('word-cell');
-                    cell.textContent = grid[r][c];
-                    cell.dataset.row = r;
-                    cell.dataset.col = c;
-                    cell.onclick = handleCellClick;
-                    wordGridContainer.appendChild(cell);
-                }
-            }
-        }
-
-        function renderWordList() {
-            const wordListElement = document.getElementById('wordList');
-            wordListElement.innerHTML = '';
-            wordSearchWords.forEach(wordObj => {
-                const li = document.createElement('li');
-                li.textContent = wordObj.word;
-                if (wordObj.found) {
-                    li.classList.add('found');
-                }
-                wordListElement.appendChild(li);
-            });
-        }
-
-        function handleCellClick(event) {
-            const cell = event.target;
-            const row = parseInt(cell.dataset.row);
-            const col = parseInt(cell.dataset.col);
-
-            // Toggle selection
-            const index = selectedCells.findIndex(c => c.row === row && c.col === col);
-            if (index > -1) {
-                selectedCells.splice(index, 1);
-                cell.classList.remove('selected');
+                q.choices.forEach(choice => {
+                    const button = document.createElement('button');
+                    button.classList.add('trivia-choice-button');
+                    button.textContent = choice;
+                    button.onclick = () => checkTriviaAnswer(choice, q.correct);
+                    triviaChoicesContainer.appendChild(button);
+                });
+                // Ensure buttons are enabled for the new question
+                triviaChoicesContainer.querySelectorAll('.trivia-choice-button').forEach(btn => btn.disabled = false);
+                nextTriviaBtn.disabled = false; // Enable next button
             } else {
-                selectedCells.push({ row, col, letter: cell.textContent, element: cell });
-                cell.classList.add('selected');
-            }
-
-            if (selectedCells.length >= 2) {
-                checkSelectedWord();
+                triviaQuestionDisplay.textContent = "Trivia complete!";
+                triviaChoicesContainer.innerHTML = '';
+                triviaMessage.textContent = `You scored ${triviaScore} out of ${triviaQuestions.length}!`;
+                nextTriviaBtn.disabled = true; // Disable next button once complete
             }
         }
 
-        function checkSelectedWord() {
-            // Sort selected cells to ensure consistent order (e.g., top-left to bottom-right)
-            selectedCells.sort((a, b) => {
-                if (a.row !== b.row) return a.row - b.row;
-                return a.col - b.col;
+        function checkTriviaAnswer(selectedChoice, correctAnswer) {
+            const choiceButtons = triviaChoicesContainer.querySelectorAll('.trivia-choice-button');
+            choiceButtons.forEach(button => {
+                button.disabled = true; // Disable all choices after selection
+                if (button.textContent === correctAnswer) {
+                    button.classList.add('correct');
+                } else if (button.textContent === selectedChoice) {
+                    button.classList.add('incorrect');
+                }
             });
 
-            const selectedLetters = selectedCells.map(c => c.letter).join('');
-            let found = false;
-
-            for (let i = 0; i < wordSearchWords.length; i++) {
-                if (wordSearchWords[i].word === selectedLetters && !wordSearchWords[i].found) {
-                    found = true;
-                    wordSearchWords[i].found = true;
-                    selectedCells.forEach(cell => cell.element.classList.add('found'));
-                    wordSearchMessage.textContent = `Found: ${selectedLetters}!`;
-                    wordSearchMessage.style.color = 'green';
-                    break;
-                }
-            }
-
-            if (found) {
-                renderWordList();
-                selectedCells = []; // Clear selection for next word
-                setTimeout(() => {
-                    selectedCells.forEach(cell => cell.element.classList.remove('selected'));
-                }, 500); // Give a moment for 'found' highlight
-                if (wordSearchWords.every(w => w.found)) {
-                    showMessage('Congratulations! You found all the words!');
-                }
+            if (selectedChoice === correctAnswer) {
+                triviaScore++;
+                triviaMessage.textContent = "Correct!";
+                triviaMessage.style.color = 'green';
             } else {
-                // If not found, clear selection after a short delay
-                wordSearchMessage.textContent = 'Keep trying!';
-                wordSearchMessage.style.color = 'red';
-                setTimeout(() => {
-                    selectedCells.forEach(cell => cell.element.classList.remove('selected'));
-                    selectedCells = [];
-                }, 700);
+                triviaMessage.textContent = `Incorrect. The answer was: ${correctAnswer}`;
+                triviaMessage.style.color = 'red';
             }
+            updateTriviaScore();
+            currentTriviaQuestionIndex++; // Increment index here
+        }
+
+        function updateTriviaScore() {
+            triviaScoreDisplay.textContent = `Score: ${triviaScore} / ${triviaQuestions.length}`;
         }
 
         // Initialize elements on page load
         window.onload = function() {
-            renderMoodHistory(); // Load any previously logged moods (if using local storage, or default empty)
-            updateResilienceProgress(); // Initial update
-            initializeWordSearch(); // Start a new game when the page loads
+            renderMoodHistory();
+            updateResilienceProgress();
+            initializeTriviaGame(); // Start Trivia Game when the page loads
+            stopBreathingBtn.disabled = true; // Ensure stop button is disabled initially
+            // Start button is already enabled by default (not disabled on load)
         };
     </script>
 </body>
